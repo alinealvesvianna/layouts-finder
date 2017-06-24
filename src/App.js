@@ -8,34 +8,97 @@ class App extends Component {
     super(props)
     this.state = {
       //list
-      typeOfSearch: 'playoffs',
+      typeOfSearch: [
+        {
+          value: 'animated',
+          name: 'animated'
+        },
+        {
+          value: 'debuts',
+          name: 'debuts'
+        },
+        {
+          value: 'playoffs',
+          name: 'playoffs'
+        },
+        {
+          value: 'teams',
+          name: 'teams'
+        }
+      ],
       //timeframe
-      period: 'week',
+      period: [
+        {
+          value: 'week',
+          name: 'week'
+        },
+        {
+          value: 'month',
+          name: 'month'
+        },
+        {
+          value: 'year',
+          name: 'year'
+        },
+        {
+          value: 'ever',
+          name: 'ever'
+        }
+      ],
       //timeframe
-      amountResults: 10
+      amountResults: [
+        {
+          value: '10',
+          name: '10'
+        },
+        {
+          value: '20',
+          name: '20'
+        },
+        {
+          value: '30',
+          name: '30'
+        },
+      ]
     }
-    this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleClick() {
+
+
+  handleChange(event) {
+
     this.setState({
-        period: 'month',
+        value: event.target.value,
     });
 
-    console.log(this.state.period);
+    console.log(event.target.value);
   }
 
   render() {
+
+    const createItem = (item, key) => <option key = {key} value = {item.value}>
+     {item.name} </option>;
+
     return (
       <div className="container">
         <FetchDribbble
-          typeOfSearch ={this.state.typeOfSearch}
-          period ={this.state.period}
-          amountResults ={this.state.amountResults} />
+          typeOfSearch ="debuts"
+          period ='week'
+          amountResults ='20' />
 
-          <ButtonFilter handleClick={this.handleClick} period={this.state.period}>
-            {this.state.typeOfSearch}
-          </ButtonFilter>
+          <SelectFilter handleChange={this.handleChange} value={this.state.value}>
+            {this.state.typeOfSearch.map(createItem)}
+          </SelectFilter>
+
+          <SelectFilter handleChange={this.handleChange} value={this.state.value}>
+            {this.state.period.map(createItem)}
+          </SelectFilter>
+
+          <SelectFilter handleChange={this.handleChange} value={this.state.value}>
+            {this.state.amountResults.map(createItem)}
+          </SelectFilter>
+
       </div>
     );
   }
@@ -64,15 +127,23 @@ class FetchDribbble extends Component {
   render(){
     return <span></span>
   }
-
 }
 
-
-class ButtonFilter extends Component {
+class SelectFilter extends Component {
   render(){
-    return (<button type="button" id="sidbarPush" onClick={this.props.handleClick} value= {this.props.period}>{this.props.children}</button>)
-  }
+
+    return (<select id="" onChange={this.props.handleChange} value={this.props.value}>
+              {this.props.children}
+            </select>
+          )
+        }
 }
+
+
+// <FetchDribbble
+//   typeOfSearch ="playoffs"
+//   period ={this.state.period}
+//   amountResults ={this.state.amountResults} />
 
 
 
