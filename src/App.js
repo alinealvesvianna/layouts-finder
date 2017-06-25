@@ -101,15 +101,10 @@ class App extends Component {
     return (
       <div className="container">
           {selects}
-          <SwitchSize
-            handleChange={e => this.handleChange("imagesSize", e.target.checked)}
-            checked = {this.state.isLarge}
-            name="imagesSize"/>
           <FetchDribbble
             typeOfSearchSelected = {this.state.values.typeOfSearch}
             periodSelected = {this.state.values.period}
-            amountResultsSelected = {this.state.values.amountResults}
-            isLargeSelected = {this.state.values.imagesSize}/>
+            amountResultsSelected = {this.state.values.amountResults}/>
       </div>
     );
   }
@@ -133,6 +128,10 @@ class FetchDribbble extends Component {
           this.callApi(nextProps);
     }
 
+    // console.log(nextProps);
+    //
+    // this.props.isLargeSelected !== nextProps.isLargeSelected
+    // ? this.changeStateSizeImage(nextProps.isLargeSelected) : null
   }
 
   callApi(nextProperties){
@@ -162,18 +161,34 @@ class FetchDribbble extends Component {
     });
   }
 
+  changeStateSizeImage(value){
+      this.setState({
+          isLarge: value
+      })
+  }
 
   render(){
 
+    const teste = this.state.shotsDribbble.length > 0
+     ? <SwitchSize
+        handleImage={e => this.changeStateSizeImage(e.target.checked)}
+        checked = {this.state.isLarge}
+        name="imagesSize" /> : ''
 
-    const dribbbleShot = this.state.shotsDribbble !== []
+    const dribbbleShot = this.state.shotsDribbble.length > 0
     ? this.state.shotsDribbble.map(obj => (
       <li className="dribbbleItem" key={obj.id}>
         <p>{obj.title}</p>
-        <img className="dribbbleItem__img" src={obj.images.normal} />
+        <img className="dribbbleItem__img" src={this.state.isLarge ? obj.images.normal : obj.images.teaser}  />
       </li>)) : null
 
-    return (<ul>{dribbbleShot}</ul>);
+    return (<div>
+              {teste}
+              <ul>
+                {dribbbleShot}
+              </ul>
+            </div>
+          );
   }
 }
 
@@ -194,7 +209,7 @@ class SwitchSize extends Component {
   render(){
     return(
       <input type="checkbox"
-        onChange={this.props.handleChange}
+        onChange={this.props.handleImage}
         checked={this.props.isLarge}
         name={this.props.sizeCheckbox} />
     )
