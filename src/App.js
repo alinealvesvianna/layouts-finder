@@ -121,7 +121,9 @@ class FetchDribbble extends Component {
   }
 
   componentWillReceiveProps (nextProps){
-    if(this.props.typeOfSearchSelected !== nextProps.typeOfSearchSelected || this.props.periodSelected !== nextProps.periodSelected || this.props.amountResultsSelected !== nextProps.amountResultsSelected){
+    if(this.props.typeOfSearchSelected !== nextProps.typeOfSearchSelected
+        || this.props.periodSelected !== nextProps.periodSelected
+        || this.props.amountResultsSelected !== nextProps.amountResultsSelected){
       return axios
       .get('https://api.dribbble.com/v1/shots?', {
         params: {
@@ -150,13 +152,19 @@ class FetchDribbble extends Component {
   }
 
   render(){
-    return <span></span>
+    const dribbbleShot = this.state.shotsDribbble !== []
+    ? this.state.shotsDribbble.map(obj => (
+      <li className="dribbbleItem" key={obj.id}>
+        <p>{obj.title}</p>
+        <img className="dribbbleItem__img" src={obj.images.normal} />
+      </li>)) : null
+
+    return (<ul>{dribbbleShot}</ul>);
   }
 }
 
 class SelectFilter extends Component {
   render(){
-
     return (
         <select
           onChange={this.props.handleChange}
@@ -165,7 +173,7 @@ class SelectFilter extends Component {
               {this.props.children}
           </select>
         );
-      }
+    }
 }
 
 
