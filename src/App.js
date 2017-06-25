@@ -59,7 +59,14 @@ class App extends Component {
           value: '30',
           name: '30'
         },
-      ]
+      ],
+
+      typeOfSearchSelected: '',
+      periodSelected: '',
+      amountResultsSelected: ''
+
+
+      // shotsDribbble: []
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -68,9 +75,37 @@ class App extends Component {
 
   handleChange(event) {
 
-    this.setState({
-        value: event.target.value,
-    });
+    //
+    // this.setState({
+    //     value: event.target.value,
+    // });
+
+    switch (event.target.name) {
+
+      case "typeOfSearch":
+        console.log("eh o typeOfSearch");
+        this.setState({
+            typeOfSearchSelected: event.target.value,
+        });
+        break;
+
+      case "period":
+        console.log("eh o period");
+        this.setState({
+            periodSelected: event.target.value,
+        });
+        break;
+
+      case "amountResults":
+        console.log("eh o amountResults");
+        this.setState({
+            amountResultsSelected: event.target.value,
+        });
+        break;
+
+      default:
+        break;
+      }
 
     console.log(event.target.value);
   }
@@ -83,19 +118,19 @@ class App extends Component {
     return (
       <div className="container">
         <FetchDribbble
-          typeOfSearch ="debuts"
-          period ='week'
-          amountResults ='20' />
+          typeOfSearchSelected = {this.state.typeOfSearchSelected}
+          periodSelected = {this.state.periodSelected}
+          amountResultsSelected = {this.state.amountResultsSelected}/>
 
-          <SelectFilter handleChange={this.handleChange} value={this.state.value}>
+        <SelectFilter handleChange={this.handleChange} value={this.state.typeOfSearchSelected} name="typeOfSearch">
             {this.state.typeOfSearch.map(createItem)}
           </SelectFilter>
 
-          <SelectFilter handleChange={this.handleChange} value={this.state.value}>
+          <SelectFilter handleChange={this.handleChange} value={this.state.periodSelected} name="period">
             {this.state.period.map(createItem)}
           </SelectFilter>
 
-          <SelectFilter handleChange={this.handleChange} value={this.state.value}>
+          <SelectFilter handleChange={this.handleChange} value={this.state.amountResultsSelected} name="amountResults">
             {this.state.amountResults.map(createItem)}
           </SelectFilter>
 
@@ -106,22 +141,40 @@ class App extends Component {
 
 class FetchDribbble extends Component {
 
-  componentDidMount(){
-    return axios
-    .get('https://api.dribbble.com/v1/shots?', {
-      params: {
-        list: this.props.typeOfSearch,
-        timeframe: this.props.period,
-        access_token: '74bdb2a70117794ca7f0e3081e7273ee47f27fdfad9fa4d3a71a53e8cfe2d928',
-        per_page: this.props.amountResults
-      }
-    })
-    .then(response =>
-      console.log(response)
-    )
-    .catch(function (error) {
-      console.log(error);
-    });
+  constructor (props) {
+    super(props)
+    this.state = {
+      shotsDribbble: []
+    }
+  }
+
+  componentWillReceiveProps (nextProps){
+    if(this.props.typeOfSearchSelected !== nextProps.typeOfSearchSelected || this.props.periodSelected !== nextProps.periodSelected || this.props.amountResultsSelected !== nextProps.amountResultsSelected){
+      return axios
+      .get('https://api.dribbble.com/v1/shots?', {
+        params: {
+          list: nextProps.typeOfSearchSelected,
+          timeframe: nextProps.periodSelected,
+          access_token: '74bdb2a70117794ca7f0e3081e7273ee47f27fdfad9fa4d3a71a53e8cfe2d928',
+          per_page: nextProps.amountResultsSelected
+        }
+      })
+      .then((response) => {
+        const dribbble = response.data.map(
+          objDribbble => objDribbble
+        )
+
+        this.setState({
+          shotsDribbble: dribbble
+        })
+
+        console.log(this.state.shotsDribbble);
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
   }
 
   render(){
@@ -132,10 +185,9 @@ class FetchDribbble extends Component {
 class SelectFilter extends Component {
   render(){
 
-    return (<select id="" onChange={this.props.handleChange} value={this.props.value}>
+    return (<select onChange={this.props.handleChange} value={this.props.value} name= {this.props.name}>
               {this.props.children}
-            </select>
-          )
+            </select>)
         }
 }
 
