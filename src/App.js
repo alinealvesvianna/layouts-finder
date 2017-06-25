@@ -8,6 +8,7 @@ class App extends Component {
     super(props)
     this.state = {
       values: {},
+      isLarge: false,
       //list
       typeOfSearch: [
         {
@@ -61,7 +62,6 @@ class App extends Component {
           name: '30'
         },
       ],
-      // shotsDribbble: []
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -84,7 +84,6 @@ class App extends Component {
     const createItem = (item, key) =>
       <option key = {key} value = {item.value}>
         {item.name}
-        {" "}
       </option>;
 
       const selects = ["typeOfSearch", "period", "amountResults"].map(name => {
@@ -99,9 +98,14 @@ class App extends Component {
         );
       });
 
+
     return (
       <div className="container">
           {selects}
+          <SwitchSize
+            handleChange={e => this.handleChange("imagesSize", e.target.checked)}
+            checked = {this.state.isLarge}
+            name="imagesSize"/>
           <FetchDribbble
             typeOfSearchSelected = {this.state.values.typeOfSearch}
             periodSelected = {this.state.values.period}
@@ -120,7 +124,8 @@ class FetchDribbble extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps){
+  componentWillReceiveProps(nextProps){
+
     if(this.props.typeOfSearchSelected !== nextProps.typeOfSearchSelected
         || this.props.periodSelected !== nextProps.periodSelected
         || this.props.amountResultsSelected !== nextProps.amountResultsSelected){
@@ -152,6 +157,8 @@ class FetchDribbble extends Component {
   }
 
   render(){
+
+
     const dribbbleShot = this.state.shotsDribbble !== []
     ? this.state.shotsDribbble.map(obj => (
       <li className="dribbbleItem" key={obj.id}>
@@ -169,11 +176,22 @@ class SelectFilter extends Component {
         <select
           onChange={this.props.handleChange}
           value={this.props.value}
-          name= {this.props.name}>
+          name={this.props.name}>
               {this.props.children}
           </select>
         );
     }
+}
+
+class SwitchSize extends Component {
+  render(){
+    return(
+      <input type="checkbox"
+        onChange={this.props.handleChange}
+        checked={this.props.isLarge}
+        name={this.props.sizeCheckbox} />
+    )
+  }
 }
 
 
