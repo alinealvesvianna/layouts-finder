@@ -7,6 +7,7 @@ class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      values: {},
       //list
       typeOfSearch: [
         {
@@ -60,80 +61,51 @@ class App extends Component {
           name: '30'
         },
       ],
-
-      typeOfSearchSelected: '',
-      periodSelected: '',
-      amountResultsSelected: ''
-
-
       // shotsDribbble: []
     }
     this.handleChange = this.handleChange.bind(this);
   }
 
 
-
-  handleChange(event) {
-
-    //
-    // this.setState({
-    //     value: event.target.value,
-    // });
-
-    switch (event.target.name) {
-
-      case "typeOfSearch":
-        console.log("eh o typeOfSearch");
-        this.setState({
-            typeOfSearchSelected: event.target.value,
-        });
-        break;
-
-      case "period":
-        console.log("eh o period");
-        this.setState({
-            periodSelected: event.target.value,
-        });
-        break;
-
-      case "amountResults":
-        console.log("eh o amountResults");
-        this.setState({
-            amountResultsSelected: event.target.value,
-        });
-        break;
-
-      default:
-        break;
-      }
-
-    console.log(event.target.value);
-  }
+    handleChange(name, value) {
+      this.setState(
+        {
+          values: {
+            ...this.state.values,
+            [name]: value
+          }
+        },
+        () => console.log("Novos valores:", this.state.values)
+      );
+    }
 
   render() {
 
-    const createItem = (item, key) => <option key = {key} value = {item.value}>
-     {item.name} </option>;
+    const createItem = (item, key) =>
+      <option key = {key} value = {item.value}>
+        {item.name}
+        {" "}
+      </option>;
+
+      const selects = ["typeOfSearch", "period", "amountResults"].map(name => {
+      return (
+          <SelectFilter
+            handleChange={e => this.handleChange(name, e.target.value)}
+            key={name}
+            value={this.state.values[name]}
+            name={name}>
+            {this.state[name].map(createItem)}
+          </SelectFilter>
+        );
+      });
 
     return (
       <div className="container">
-        <FetchDribbble
-          typeOfSearchSelected = {this.state.typeOfSearchSelected}
-          periodSelected = {this.state.periodSelected}
-          amountResultsSelected = {this.state.amountResultsSelected}/>
-
-        <SelectFilter handleChange={this.handleChange} value={this.state.typeOfSearchSelected} name="typeOfSearch">
-            {this.state.typeOfSearch.map(createItem)}
-          </SelectFilter>
-
-          <SelectFilter handleChange={this.handleChange} value={this.state.periodSelected} name="period">
-            {this.state.period.map(createItem)}
-          </SelectFilter>
-
-          <SelectFilter handleChange={this.handleChange} value={this.state.amountResultsSelected} name="amountResults">
-            {this.state.amountResults.map(createItem)}
-          </SelectFilter>
-
+          {selects}
+          <FetchDribbble
+            typeOfSearchSelected = {this.state.values.typeOfSearch}
+            periodSelected = {this.state.values.period}
+            amountResultsSelected = {this.state.values.amountResults}/>
       </div>
     );
   }
@@ -185,17 +157,16 @@ class FetchDribbble extends Component {
 class SelectFilter extends Component {
   render(){
 
-    return (<select onChange={this.props.handleChange} value={this.props.value} name= {this.props.name}>
+    return (
+        <select
+          onChange={this.props.handleChange}
+          value={this.props.value}
+          name= {this.props.name}>
               {this.props.children}
-            </select>)
-        }
+          </select>
+        );
+      }
 }
-
-
-// <FetchDribbble
-//   typeOfSearch ="playoffs"
-//   period ={this.state.period}
-//   amountResults ={this.state.amountResults} />
 
 
 
