@@ -8,7 +8,6 @@ class App extends Component {
     super(props)
     this.state = {
       values: {},
-      isLarge: false,
       //list
       typeOfSearch: [
         {
@@ -109,7 +108,8 @@ class App extends Component {
           <FetchDribbble
             typeOfSearchSelected = {this.state.values.typeOfSearch}
             periodSelected = {this.state.values.period}
-            amountResultsSelected = {this.state.values.amountResults}/>
+            amountResultsSelected = {this.state.values.amountResults}
+            isLargeSelected = {this.state.values.imagesSize}/>
       </div>
     );
   }
@@ -120,7 +120,8 @@ class FetchDribbble extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      shotsDribbble: []
+      shotsDribbble: [],
+      isLarge: false,
     }
   }
 
@@ -129,32 +130,38 @@ class FetchDribbble extends Component {
     if(this.props.typeOfSearchSelected !== nextProps.typeOfSearchSelected
         || this.props.periodSelected !== nextProps.periodSelected
         || this.props.amountResultsSelected !== nextProps.amountResultsSelected){
-      return axios
-      .get('https://api.dribbble.com/v1/shots?', {
-        params: {
-          list: nextProps.typeOfSearchSelected,
-          timeframe: nextProps.periodSelected,
-          access_token: '74bdb2a70117794ca7f0e3081e7273ee47f27fdfad9fa4d3a71a53e8cfe2d928',
-          per_page: nextProps.amountResultsSelected
-        }
-      })
-      .then((response) => {
-        const dribbble = response.data.map(
-          objDribbble => objDribbble
-        )
-
-        this.setState({
-          shotsDribbble: dribbble
-        })
-
-        console.log(this.state.shotsDribbble);
-
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+          this.callApi(nextProps);
     }
+
   }
+
+  callApi(nextProperties){
+    return axios
+    .get('https://api.dribbble.com/v1/shots?', {
+      params: {
+        list: nextProperties.typeOfSearchSelected,
+        timeframe: nextProperties.periodSelected,
+        access_token: '74bdb2a70117794ca7f0e3081e7273ee47f27fdfad9fa4d3a71a53e8cfe2d928',
+        per_page: nextProperties.amountResultsSelected
+      }
+    })
+    .then((response) => {
+      const dribbble = response.data.map(
+        objDribbble => objDribbble
+      )
+
+      this.setState({
+        shotsDribbble: dribbble
+      })
+
+      console.log(this.state.shotsDribbble);
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
 
   render(){
 
