@@ -117,7 +117,13 @@ class FetchDribbble extends Component {
     this.state = {
       shotsDribbble: [],
       isLarge: false,
+      showDetailShot: false,
+      dataShotClicked:{},
+      likesShot: []
     }
+    this.handleImage = this.handleImage.bind(this);
+    this.openDetails = this.openDetails.bind(this);
+
   }
 
   componentWillReceiveProps(nextProps){
@@ -128,10 +134,6 @@ class FetchDribbble extends Component {
           this.callApi(nextProps);
     }
 
-    // console.log(nextProps);
-    //
-    // this.props.isLargeSelected !== nextProps.isLargeSelected
-    // ? this.changeStateSizeImage(nextProps.isLargeSelected) : null
   }
 
   callApi(nextProperties){
@@ -161,17 +163,51 @@ class FetchDribbble extends Component {
     });
   }
 
-  changeStateSizeImage(value){
+  handleImage(value){
       this.setState({
           isLarge: value
       })
   }
 
+  openDetails(event, data){
+    this.setState({
+        showDetailShot: true,
+        dataShotClicked: data
+    })
+
+    this.teste(data.likes_url)
+  }
+
+  teste(url){
+    return axios
+    .get(url)
+    .then((response) => {
+      const likes = response.data.map(
+        objLike => objLike
+      )
+
+      this.setState({
+        likesShot: likes
+      })
+
+      console.log(this.state.likesShot);
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
   render(){
 
-    const teste = this.state.shotsDribbble.length > 0
+    const details =  this.state.showDetailShot
+                     ? <ShowDetailShot
+                      url={this.state.dataShotClicked.images.hidpi}
+                      title={this.state.dataShotClicked.title} /> : ""
+
+    const sizeSwitch = this.state.shotsDribbble.length > 0
      ? <SwitchSize
-        handleImage={e => this.changeStateSizeImage(e.target.checked)}
+        handleImage={e => this.handleImage(e.target.checked)}
         checked = {this.state.isLarge}
         name="imagesSize" /> : ''
 
@@ -179,14 +215,18 @@ class FetchDribbble extends Component {
     ? this.state.shotsDribbble.map(obj => (
       <li className="dribbbleItem" key={obj.id}>
         <p>{obj.title}</p>
-        <img className="dribbbleItem__img" src={this.state.isLarge ? obj.images.normal : obj.images.teaser}  />
+        <img
+          className="dribbbleItem__img"
+          src={this.state.isLarge ? obj.images.normal : obj.images.teaser}
+          onClick={e => this.openDetails(e.target, obj)} />
       </li>)) : null
 
     return (<div>
-              {teste}
+              {sizeSwitch}
               <ul>
                 {dribbbleShot}
               </ul>
+              {details}
             </div>
           );
   }
@@ -212,6 +252,18 @@ class SwitchSize extends Component {
         onChange={this.props.handleImage}
         checked={this.props.isLarge}
         name={this.props.sizeCheckbox} />
+    )
+  }
+}
+
+class ShowDetailShot extends Component {
+  render(){
+    return(
+      <div>
+        <h1>{this.props.title}</h1>
+        <img src={this.props.url} />
+      </div>
+
     )
   }
 }
