@@ -65,7 +65,6 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-
     handleChange(name, value) {
       this.setState(
         {
@@ -96,7 +95,6 @@ class App extends Component {
           </SelectFilter>
         );
       });
-
 
     return (
       <div className="container">
@@ -170,7 +168,7 @@ class FetchDribbble extends Component {
                 likesShot: likes
               })
               console.log("likes", this.state.likesShot);}
-            console.log("callApiUrl", request)
+              console.log("callApiUrl", request)
           })
 
       .catch(function (error) {
@@ -198,7 +196,8 @@ class FetchDribbble extends Component {
     const details =  this.state.showDetailShot
                      ? <ShowDetailShot
                       url={this.state.dataShotClicked.images.hidpi}
-                      title={this.state.dataShotClicked.title} /> : ""
+                      title={this.state.dataShotClicked.title}
+                      /> : ""
 
     const sizeSwitch = this.state.shotsDribbble.length > 0
                        ? <SwitchSize
@@ -216,16 +215,24 @@ class FetchDribbble extends Component {
                                 onClick={e => this.openDetails(e.target, obj)} />
                             </li>)) : null
 
+    const likes = this.state.likesShot.length > 0
+                  ? this.state.likesShot.map(obj => (
+                    <LikeShot userLink = {obj.user.html_url}
+                              avatar = {obj.user.avatar_url}
+                              nameUser = {obj.user.username} />
+                  )) : null
+
     return (<div>
               {sizeSwitch}
               <ul>
                 {dribbbleShot}
               </ul>
               {details}
+              {likes}
             </div>
           );
   }
-  
+
 }
 
 class SelectFilter extends Component {
@@ -259,10 +266,19 @@ class ShowDetailShot extends Component {
         <h1>{this.props.title}</h1>
         <img src={this.props.url} />
       </div>
-
     )
   }
 }
+
+const LikeShot = (props) => <li>
+  <a href = {props.userLink}>
+    <img src={props.avatar} />
+    {props.nameUser}
+  </a>
+</li>
+
+
+
 
 
 
