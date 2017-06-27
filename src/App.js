@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import FetchDribbble from './components/FetchDribbble';
 import './App.css';
 import {SelectFilter} from './components/FormComponents';
+import FetchDribbble from './components/FetchDribbble';
 
 class App extends Component {
 
@@ -67,15 +67,17 @@ class App extends Component {
   }
 
     handleChange(name, value) {
-      this.setState(
+
+        this.setState(
         {
-          values: {
-            ...this.state.values,
-            [name]: value
-          }
-        },
-        () => console.log("Novos valores:", this.state.values)
-      );
+            values: {
+                ...this.state.values,
+                [name]: value
+            }
+
+        },() => console.log("Novos valores:", this.state.values)
+     );
+
     }
 
   render() {
