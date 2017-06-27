@@ -2,7 +2,7 @@
 import {SwitchSize} from './FormComponents';
 import {ShowDetailShot, LikeShot} from './DetailsShot';
 import {MensageError, Loading} from './UIReturns';
-
+import './../styles/FetchDribbble.css';
 import axios from 'axios';
 
 

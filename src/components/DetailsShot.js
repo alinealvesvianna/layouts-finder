@@ -1,9 +1,10 @@
 ﻿import React, { Component } from 'react';
+import './../styles/DetailsShot.css';
 
 export class ShowDetailShot extends Component {
     render(){
         return(
-          <div>
+          <div className="detailShot">
             <h1>{this.props.title}</h1>
             <h2>{this.props.likesAmount} curtiram!</h2>
             <img src={this.props.url} alt={this.props.description} />

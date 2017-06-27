@@ -1,9 +1,11 @@
 ﻿import React, { Component } from 'react';
+import './../styles/FormComponents.css';
 
 export class SelectFilter extends Component {
   render(){
     return (
         <select
+          className = "select-form"
           onChange={this.props.handleChange}
           value={this.props.value}
           name={this.props.name}>

@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import './../styles/UIReturns.css';
 
 export const MensageError = (props) => <div className="error">
     <p className="error__txt">
