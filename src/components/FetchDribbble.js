@@ -1,9 +1,8 @@
 ﻿import React, { Component } from 'react';
-import SwitchSize from './SwitchSize';
-import ShowDetailShot from './ShowDetailShot';
-import LikeShot from './LikeShot';
-import Loading from './Loading';
-import MensageError from './MensageError';
+import {SwitchSize} from './FormComponents';
+import {ShowDetailShot, LikeShot} from './DetailsShot';
+import {MensageError, Loading} from './UIReturns';
+
 import axios from 'axios';
 
 
@@ -48,7 +47,7 @@ class FetchDribbble extends Component {
                 timeframe: request.periodSelected,
                 access_token: "74bdb2a70117794ca7f0e3081e7273ee47f27fdfad9fa4d3a71a53e8cfe2d928",
                 per_page: request.amountResultsSelected};
-            url = "https://api.dribbble.com/v1/shots?";
+                url = "https://api.dribbble.com/v1/shots?";
         } else {
             parameters = "";
             url = request;
@@ -117,7 +116,6 @@ class FetchDribbble extends Component {
     }
 
     render(){
-
 
         const sizeSwitch = this.state.shotsDribbble.length > 0
                             ? <SwitchSize

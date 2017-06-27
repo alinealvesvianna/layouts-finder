@@ -1,7 +1,6 @@
 ﻿import React, { Component } from 'react';
-import './App.css';
 
-class ShowDetailShot extends Component {
+export class ShowDetailShot extends Component {
     render(){
         return(
           <div>
@@ -13,4 +12,11 @@ class ShowDetailShot extends Component {
   }
 }
 
-export default ShowDetailShot;
+
+export const LikeShot = (props) => <li key={props.id}>
+  <a href = {props.userLink}>
+    <img src={props.avatar} alt={"Usuario que curtiu: " + props.description}/>
+    {props.nameUser}
+  </a>
+</li>
+

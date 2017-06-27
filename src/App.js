@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import FetchDribbble from './FetchDribbble';
+import FetchDribbble from './components/FetchDribbble';
 import './App.css';
-import SelectFilter from './components/SelectFilter';
+import {SelectFilter} from './components/FormComponents';
 
 class App extends Component {
 
