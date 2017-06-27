@@ -123,7 +123,6 @@ class FetchDribbble extends Component {
     }
     this.handleImage = this.handleImage.bind(this);
     this.openDetails = this.openDetails.bind(this);
-
   }
 
   componentWillReceiveProps(nextProps){
@@ -133,34 +132,50 @@ class FetchDribbble extends Component {
         || this.props.amountResultsSelected !== nextProps.amountResultsSelected){
           this.callApi(nextProps);
     }
-
   }
 
-  callApi(nextProperties){
-    return axios
-    .get('https://api.dribbble.com/v1/shots?', {
-      params: {
-        list: nextProperties.typeOfSearchSelected,
-        timeframe: nextProperties.periodSelected,
-        access_token: '74bdb2a70117794ca7f0e3081e7273ee47f27fdfad9fa4d3a71a53e8cfe2d928',
-        per_page: nextProperties.amountResultsSelected
-      }
-    })
-    .then((response) => {
-      const dribbble = response.data.map(
-        objDribbble => objDribbble
-      )
+  callApi(request){
 
-      this.setState({
-        shotsDribbble: dribbble
+    let parameters,
+        url;
+
+    if (request instanceof Object){
+        parameters = {
+                list: request.typeOfSearchSelected,
+                timeframe: request.periodSelected,
+                access_token: '74bdb2a70117794ca7f0e3081e7273ee47f27fdfad9fa4d3a71a53e8cfe2d928',
+                per_page: request.amountResultsSelected};
+                url = 'https://api.dribbble.com/v1/shots?';
+    } else {
+        parameters = "";
+        url = request;}
+
+    return axios
+      .get(url, {
+        params: parameters
       })
 
-      console.log(this.state.shotsDribbble);
+      .then((response) => {
+        if (request instanceof Object){
+          const dribbble = response.data.map(
+            objDribbble => objDribbble
+          )
+          this.setState({
+            shotsDribbble: dribbble
+          })
+        } else {
+            const likes = response.data.map(
+              objLike => objLike)
+              this.setState({
+                likesShot: likes
+              })
+              console.log("likes", this.state.likesShot);}
+            console.log("callApiUrl", request)
+          })
 
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+      .catch(function (error) {
+          console.log(error);
+        });
   }
 
   handleImage(value){
@@ -175,27 +190,7 @@ class FetchDribbble extends Component {
         dataShotClicked: data
     })
 
-    this.teste(data.likes_url)
-  }
-
-  teste(url){
-    return axios
-    .get(url)
-    .then((response) => {
-      const likes = response.data.map(
-        objLike => objLike
-      )
-
-      this.setState({
-        likesShot: likes
-      })
-
-      console.log(this.state.likesShot);
-
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    this.callApi(data.likes_url)
   }
 
   render(){
@@ -206,20 +201,20 @@ class FetchDribbble extends Component {
                       title={this.state.dataShotClicked.title} /> : ""
 
     const sizeSwitch = this.state.shotsDribbble.length > 0
-     ? <SwitchSize
-        handleImage={e => this.handleImage(e.target.checked)}
-        checked = {this.state.isLarge}
-        name="imagesSize" /> : ''
+                       ? <SwitchSize
+                          handleImage={e => this.handleImage(e.target.checked)}
+                          checked = {this.state.isLarge}
+                          name="imagesSize" /> : ""
 
     const dribbbleShot = this.state.shotsDribbble.length > 0
-    ? this.state.shotsDribbble.map(obj => (
-      <li className="dribbbleItem" key={obj.id}>
-        <p>{obj.title}</p>
-        <img
-          className="dribbbleItem__img"
-          src={this.state.isLarge ? obj.images.normal : obj.images.teaser}
-          onClick={e => this.openDetails(e.target, obj)} />
-      </li>)) : null
+                          ? this.state.shotsDribbble.map(obj => (
+                            <li className="dribbbleItem" key={obj.id}>
+                              <p>{obj.title}</p>
+                              <img
+                                className="dribbbleItem__img"
+                                src={this.state.isLarge ? obj.images.normal : obj.images.teaser}
+                                onClick={e => this.openDetails(e.target, obj)} />
+                            </li>)) : null
 
     return (<div>
               {sizeSwitch}
@@ -230,6 +225,7 @@ class FetchDribbble extends Component {
             </div>
           );
   }
+  
 }
 
 class SelectFilter extends Component {
