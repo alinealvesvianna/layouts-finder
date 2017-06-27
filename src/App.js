@@ -117,7 +117,8 @@ class FetchDribbble extends Component {
       isLarge: false,
       showDetailShot: false,
       dataShotClicked:{},
-      likesShot: []
+      likesShot: [],
+      showLoading: false
     }
     this.handleImage = this.handleImage.bind(this);
     this.openDetails = this.openDetails.bind(this);
@@ -128,7 +129,10 @@ class FetchDribbble extends Component {
     if(this.props.typeOfSearchSelected !== nextProps.typeOfSearchSelected
         || this.props.periodSelected !== nextProps.periodSelected
         || this.props.amountResultsSelected !== nextProps.amountResultsSelected){
-          this.callApi(nextProps);
+            this.callApi(nextProps);
+            this.setState({
+                showLoading: true
+            })
     }
   }
 
@@ -159,16 +163,19 @@ class FetchDribbble extends Component {
             objDribbble => objDribbble
           )
           this.setState({
+            showLoading: false,
             shotsDribbble: dribbble
           })
+            console.log("shots", this.state.shotsDribbble)
         } else {
             const likes = response.data.map(
               objLike => objLike)
               this.setState({
-                likesShot: likes
+                likesShot: likes,
+                showLoading: false
               })
               console.log("likes", this.state.likesShot);}
-              console.log("callApiUrl", request)
+              console.log("call likes url", request)
           })
 
       .catch(function (error) {
@@ -185,6 +192,7 @@ class FetchDribbble extends Component {
   openDetails(event, data){
     this.setState({
         showDetailShot: true,
+        showLoading: true,
         dataShotClicked: data
     })
 
@@ -193,11 +201,6 @@ class FetchDribbble extends Component {
 
   render(){
 
-    const details =  this.state.showDetailShot
-                     ? <ShowDetailShot
-                      url={this.state.dataShotClicked.images.hidpi}
-                      title={this.state.dataShotClicked.title}
-                      /> : ""
 
     const sizeSwitch = this.state.shotsDribbble.length > 0
                        ? <SwitchSize
@@ -213,22 +216,36 @@ class FetchDribbble extends Component {
                                 className="dribbbleItem__img"
                                 src={this.state.isLarge ? obj.images.normal : obj.images.teaser}
                                 onClick={e => this.openDetails(e.target, obj)} />
-                            </li>)) : null
+                            </li>)) : ""
+
+    const details =  this.state.showDetailShot
+                     ? <ShowDetailShot
+                          url={this.state.dataShotClicked.images.hidpi}
+                          title={this.state.dataShotClicked.title}
+                          likesAmount={this.state.dataShotClicked.likes_count} /> : ""
 
     const likes = this.state.likesShot.length > 0
                   ? this.state.likesShot.map(obj => (
-                    <LikeShot userLink = {obj.user.html_url}
+                    <LikeShot key = {obj.id}
+                              userLink = {obj.user.html_url}
                               avatar = {obj.user.avatar_url}
-                              nameUser = {obj.user.username} />
-                  )) : null
+                              nameUser = {obj.user.username} /> )) : ""
+
+    const loading = this.state.showLoading 
+                ? <Loading /> : ""
+
+
 
     return (<div>
-              {sizeSwitch}
-              <ul>
-                {dribbbleShot}
-              </ul>
-              {details}
-              {likes}
+                {loading}
+                {sizeSwitch}
+                <ul>
+                    {dribbbleShot}
+                </ul>
+                <section>
+                    {details}
+                    {likes}
+                </section>
             </div>
           );
   }
@@ -264,18 +281,27 @@ class ShowDetailShot extends Component {
     return(
       <div>
         <h1>{this.props.title}</h1>
+        <h2>{this.props.likesAmount} curtiram!</h2>
         <img src={this.props.url} />
       </div>
     )
   }
 }
 
-const LikeShot = (props) => <li>
+const LikeShot = (props) => <li key={props.id}>
   <a href = {props.userLink}>
     <img src={props.avatar} />
     {props.nameUser}
   </a>
 </li>
+
+const Loading = props => <div className="loading">
+    <p className="loading__txt">
+        <span className="loading__animation"></span>
+        <span className="icon-thumbs-up loading__icon"></span>
+        Carregando
+    </p>
+</div>
 
 
 
