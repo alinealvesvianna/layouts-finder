@@ -120,7 +120,7 @@ class FetchDribbble extends Component {
       likesShot: [],
       showLoading: false,
       requestFail: false,
-      requestMensageFail: {}
+      requestMessageFail: {}
     }
     this.handleImage = this.handleImage.bind(this);
     this.openDetails = this.openDetails.bind(this);
@@ -149,7 +149,7 @@ class FetchDribbble extends Component {
               timeframe: request.periodSelected,
               access_token: "74bdb2a70117794ca7f0e3081e7273ee47f27fdfad9fa4d3a71a53e8cfe2d928",
               per_page: request.amountResultsSelected};
-          url = "bananinha";
+          url = "https://api.dribbble.com/v1/shots?";
       } else {
           parameters = "";
           url = request;
@@ -185,7 +185,7 @@ class FetchDribbble extends Component {
             this.setState({
                 showLoading: false,
                 requestFail: false,
-                requestMensageFail: ""})
+                requestMessageFail: ""})
             
           })
 
@@ -193,7 +193,7 @@ class FetchDribbble extends Component {
 
           this.setState({
               requestFail: true,
-              requestMensageFail: error,
+              requestMessageFail: error,
               showLoading: false
           })
 
@@ -257,7 +257,7 @@ class FetchDribbble extends Component {
 
     const error = this.state.requestFail
                   ? <MensageError 
-                        message= {this.state.requestMensageFail.message} /> : ""
+                        message= {this.state.requestMessageFail.message} /> : ""
 
 
     return (<div>
