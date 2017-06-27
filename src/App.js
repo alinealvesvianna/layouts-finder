@@ -214,6 +214,7 @@ class FetchDribbble extends Component {
                               <p>{obj.title}</p>
                               <img
                                 className="dribbbleItem__img"
+                                alt = {obj.tags.join(" ")}
                                 src={this.state.isLarge ? obj.images.normal : obj.images.teaser}
                                 onClick={e => this.openDetails(e.target, obj)} />
                             </li>)) : ""
@@ -222,6 +223,7 @@ class FetchDribbble extends Component {
                      ? <ShowDetailShot
                           url={this.state.dataShotClicked.images.hidpi}
                           title={this.state.dataShotClicked.title}
+                          description={this.state.dataShotClicked.title}
                           likesAmount={this.state.dataShotClicked.likes_count} /> : ""
 
     const likes = this.state.likesShot.length > 0
@@ -229,11 +231,11 @@ class FetchDribbble extends Component {
                     <LikeShot key = {obj.id}
                               userLink = {obj.user.html_url}
                               avatar = {obj.user.avatar_url}
+                              description = {obj.user.username}
                               nameUser = {obj.user.username} /> )) : ""
 
     const loading = this.state.showLoading 
-                ? <Loading /> : ""
-
+                    ? <Loading /> : ""
 
 
     return (<div>
@@ -282,7 +284,7 @@ class ShowDetailShot extends Component {
       <div>
         <h1>{this.props.title}</h1>
         <h2>{this.props.likesAmount} curtiram!</h2>
-        <img src={this.props.url} />
+        <img src={this.props.url} alt={this.props.description} />
       </div>
     )
   }
@@ -290,22 +292,17 @@ class ShowDetailShot extends Component {
 
 const LikeShot = (props) => <li key={props.id}>
   <a href = {props.userLink}>
-    <img src={props.avatar} />
+    <img src={props.avatar} alt={"Usuario que curtiu: " + props.description}/>
     {props.nameUser}
   </a>
 </li>
 
-const Loading = props => <div className="loading">
+const Loading = (props) => <div className="loading">
     <p className="loading__txt">
         <span className="loading__animation"></span>
         <span className="icon-thumbs-up loading__icon"></span>
         Carregando
     </p>
 </div>
-
-
-
-
-
 
 export default App;
