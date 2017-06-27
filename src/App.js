@@ -46,7 +46,7 @@ class App extends Component {
           name: 'ever'
         }
       ],
-      //timeframe
+      //per_page
       amountResults: [
         {
           value: '10',
@@ -118,7 +118,9 @@ class FetchDribbble extends Component {
       showDetailShot: false,
       dataShotClicked:{},
       likesShot: [],
-      showLoading: false
+      showLoading: false,
+      requestFail: false,
+      requestMensageFail: {}
     }
     this.handleImage = this.handleImage.bind(this);
     this.openDetails = this.openDetails.bind(this);
@@ -138,48 +140,64 @@ class FetchDribbble extends Component {
 
   callApi(request){
 
-    let parameters,
-        url;
+      let parameters,
+          url;
 
-    if (request instanceof Object){
-        parameters = {
-                list: request.typeOfSearchSelected,
-                timeframe: request.periodSelected,
-                access_token: '74bdb2a70117794ca7f0e3081e7273ee47f27fdfad9fa4d3a71a53e8cfe2d928',
-                per_page: request.amountResultsSelected};
-                url = 'https://api.dribbble.com/v1/shots?';
-    } else {
-        parameters = "";
-        url = request;}
+      if (request instanceof Object){
+          parameters = {
+              list: request.typeOfSearchSelected,
+              timeframe: request.periodSelected,
+              access_token: "74bdb2a70117794ca7f0e3081e7273ee47f27fdfad9fa4d3a71a53e8cfe2d928",
+              per_page: request.amountResultsSelected};
+          url = "bananinha";
+      } else {
+          parameters = "";
+          url = request;
+      }
 
-    return axios
-      .get(url, {
-        params: parameters
-      })
+      return axios
+        .get(url, {
+            params: parameters
+        })
 
-      .then((response) => {
-        if (request instanceof Object){
-          const dribbble = response.data.map(
-            objDribbble => objDribbble
-          )
+        .then((response) => {
+
+            if (request instanceof Object){
+                const dribbble = response.data.map(
+                  objDribbble => objDribbble)
+
+                this.setState({
+                    shotsDribbble: dribbble})
+
+                console.log("shots", this.state.shotsDribbble);
+
+            } else {
+                const likes = response.data.map(
+                  objLike => objLike)
+
+                this.setState({
+                    likesShot: likes})
+
+                console.log("likes", this.state.likesShot);
+                console.log("call likes url", request);
+               }
+
+            this.setState({
+                showLoading: false,
+                requestFail: false,
+                requestMensageFail: ""})
+            
+          })
+
+      .catch((error) => {
+
           this.setState({
-            showLoading: false,
-            shotsDribbble: dribbble
-          })
-            console.log("shots", this.state.shotsDribbble)
-        } else {
-            const likes = response.data.map(
-              objLike => objLike)
-              this.setState({
-                likesShot: likes,
-                showLoading: false
-              })
-              console.log("likes", this.state.likesShot);}
-              console.log("call likes url", request)
+              requestFail: true,
+              requestMensageFail: error,
+              showLoading: false
           })
 
-      .catch(function (error) {
-          console.log(error);
+          console.log("erroConsole", error);
         });
   }
 
@@ -237,8 +255,13 @@ class FetchDribbble extends Component {
     const loading = this.state.showLoading 
                     ? <Loading /> : ""
 
+    const error = this.state.requestFail
+                  ? <MensageError 
+                        message= {this.state.requestMensageFail.message} /> : ""
+
 
     return (<div>
+                {error}
                 {loading}
                 {sizeSwitch}
                 <ul>
@@ -304,5 +327,13 @@ const Loading = (props) => <div className="loading">
         Carregando
     </p>
 </div>
+
+const MensageError = (props) => <div className="error">
+    <p className="error__txt">
+        <span className="icon-thumbs-down error__icon"></span>
+        Ops...Alguma coisa deu errado: {props.message}
+    </p>
+</div>
+
 
 export default App;
