@@ -1,5 +1,6 @@
 .container{
   width: 100%;
+  position: relative;
 }
 
 .container--intro{
@@ -8,47 +9,51 @@
 }
 
 .ilustration {
-  background-image: url(../images/spray.svg);
+  height: 100%;
+  width: 100%;
+  background-image: url(../images/computer.svg);
   background-repeat: no-repeat;
-  height: 25em;
-  width:25em;
-  margin: 0 auto;
-  display: block;
+  background-position: center;
+  position:absolute;
+  top: 0;
+}
+
+.content{
+  position:relative;
+  z-index: 10;
 }
 
 
-@keyframes wobble {
+@keyframes bounceInUp {
+  from, 60%, 75%, 90%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
   from {
-    transform: none;
-  }
-
-  15% {
-    transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);
-  }
-
-  30% {
-    transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);
-  }
-
-  45% {
-    transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
+    opacity: 0;
+    transform: translate3d(0, 3000px, 0);
   }
 
   60% {
-    transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
+    opacity: 1;
+    transform: translate3d(0, -20px, 0);
   }
 
   75% {
-    transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
+    transform: translate3d(0, 10px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, -5px, 0);
   }
 
   to {
-    transform: none;
+    transform: translate3d(0, 0, 0);
   }
 }
 
-.wobble {
-  animation-name: wobble;
+.bounceInUp {
+  animation-name: bounceInUp;
 }
 
 .animated {
@@ -77,4 +82,42 @@
   color: #fff;
   cursor: pointer;
   display: block;
+}
+
+
+.logo{
+  color:#fff;
+  margin: 0 auto;
+  padding-top: 1em;
+  text-align: center;
+  display:block;
+  font-size: 3em;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+.icon__logo{
+  color:#f3ef03;
+  display: inline-block;
+  padding-right:0.2em;
+}
+
+.yellow{
+  color:#f3ef03;
+}
+
+
+.container--selects{
+  margin: 2em auto;
+  width:80%;
+  text-align: center;
+  background: rgba(255,255,255,0.2);
+  padding:2em;
+}
+
+.slogan{
+  color: white;
+  text-align: center;
+  font-weight: 300;
+  font-size: 2em
 }

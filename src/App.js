@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './styles/icomoon.css';
 import './styles/App.css';
 import {SelectFilter} from './components/FormComponents';
 import FetchDribbble from './components/FetchDribbble';
@@ -101,12 +102,22 @@ class App extends Component {
 
     return (
       <div className="container container--intro">
-          <span className="animated wobble ilustration"></span>
-          {selects}
-          <FetchDribbble
-            typeOfSearchSelected = {this.state.values.typeOfSearch}
-            periodSelected = {this.state.values.period}
-            amountResultsSelected = {this.state.values.amountResults}/>
+          <span className="ilustration bounceInUp animated"></span>
+          <div className="content">
+            <h1 className="logo">
+              <span className="icon-bussola icon__logo"></span>
+              Layout <span className="yellow">Finder</span>
+            </h1>
+
+            <h2 className="slogan">Ache <span className="yellow">aqui</span> o layout que você procura</h2>
+            <section className="container--selects">
+              {selects}
+            </section>
+            <FetchDribbble
+              typeOfSearchSelected = {this.state.values.typeOfSearch}
+              periodSelected = {this.state.values.period}
+              amountResultsSelected = {this.state.values.amountResults}/>
+          </div>
       </div>
     );
   }

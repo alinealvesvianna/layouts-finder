@@ -1,3 +1,39 @@
-﻿.select-form {
-    border: 1px dotted #f0f;
+
+.select-form  {
+  -webkit-appearance: none!important;
+  -moz-appearance: none;
+  background-position: 100% center;
+  background-repeat: no-repeat;
+  background-color: rgba(255, 255, 255, 0);
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeD0iMTJweCIgeT0iMHB4IiB3aWR0aD0iMjRweCIgaGVpZ2h0PSIzcHgiIHZpZXdCb3g9IjAgMCA2IDMiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDYgMyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHN0eWxlIHR5cGU9InRleHQvY3NzIj4uc3Qwe2ZpbGw6I2ZmZjt9PC9zdHlsZT48cG9seWdvbiBjbGFzcz0ic3QwIiBwb2ludHM9IjUuOTkyLDAgMi45OTIsMyAtMC4wMDgsMCAiLz48L3N2Zz4=);
+  border-style: solid;
+  border-width: 2px;
+  border-color: #fff;
+  padding: .5rem;
+  font-size: 1rem;
+  color: rgba(255,255, 255, .75);
+  line-height: normal;
+  border-radius: 0;
+  height: 2.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.select-form:nth-of-type(3) {
+    margin-bottom: 0;
+}
+
+
+@media only screen and (min-width: 40.063em) {
+  .select-form  {
+    width: calc(100% / 3 - 2em);
+    margin-right: 1em;
+    margin-bottom: 0;
+
+  }
+
+  .select-form:nth-of-type(3){
+      margin-right: 0;
+  }
 }
