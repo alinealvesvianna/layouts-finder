@@ -108,9 +108,8 @@ class App extends Component {
               <span className="icon-bussola icon__logo"></span>
               Layout <span className="yellow">Finder</span>
             </h1>
-
             <h2 className="slogan">Ache <span className="yellow">aqui</span> o layout que você procura</h2>
-            <section className="container--selects">
+            <section className="container--selects row">
               {selects}
             </section>
             <FetchDribbble

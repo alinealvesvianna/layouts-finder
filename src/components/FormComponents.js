@@ -19,11 +19,14 @@ export class SelectFilter extends Component {
 export class SwitchSize extends Component {
   render(){
     return(
+      <label className="switch">
       <input type="checkbox"
         onChange={this.props.handleImage}
         checked={this.props.isLarge}
         name={this.props.sizeCheckbox} />
+      <div className="slider round"></div>
+      </label>
+
     )
   }
 }
-

@@ -125,20 +125,25 @@ class FetchDribbble extends Component {
     render(){
 
         const sizeSwitch = this.state.shotsDribbble.length > 0
-                            ? <SwitchSize
-                                handleImage={e => this.handleImage(e.target.checked)}
-                                checked = {this.state.isLarge}
-                                name="imagesSize" /> : ""
+                           ? <div>
+                                <SwitchSize
+                                  handleImage={e => this.handleImage(e.target.checked)}
+                                  checked = {this.state.isLarge}
+                                  name="imagesSize" />
+                                <label className="label-form">Aumentar/Diminuir tamanho das imagens</label>
+                             </div>: ""
 
         const dribbbleShot = this.state.shotsDribbble.length > 0
                               ? this.state.shotsDribbble.map(obj => (
-                                <li className="dribbbleItem" key={obj.id}>
-                                  <p>{obj.title}</p>
+                                <li className={this.state.isLarge ? "dribbleShot-list__item dribbleShot-list__item--large" : "dribbleShot-list__item  dribbleShot-list__item--small"}
+                                    key={obj.id}>
                                   <img
-                                    className="dribbbleItem__img"
+                                    className="dribbleShot-list__image"
                                     alt = {obj.tags.join(" ")}
                                     src={this.state.isLarge ? obj.images.normal : obj.images.teaser}
                                     onClick={e => this.openDetails(e.target, obj)} />
+                                    <p className="dribbleShot-list__txt">Título: {obj.title}</p>
+                                    <p className="dribbleShot-list__txt">Usuário: {obj.user.username}</p>
                                   </li>)) : ""
 
         const details =  this.state.showDetailShot
@@ -168,13 +173,19 @@ class FetchDribbble extends Component {
         return (<div>
                     {error}
                     {loading}
-                    {sizeSwitch}
-                    <ul>
-                        {dribbbleShot}
-                    </ul>
-                    <section className = {this.state.showDetailShot? "show" : "hide"}>
-                        {details}
-                        {likes}
+                    <section className="row container--shots">
+                      {sizeSwitch}
+                      <ul className="dribbleShot-list">
+                          {dribbbleShot}
+                      </ul>
+                    </section>
+                    <section className = {this.state.showDetailShot? "modal show" : "modal hide"}>
+                        <div className="row container--modal">
+                          {details}
+                          <ul className="likes-list">
+                            {likes}
+                          </ul>
+                        </div>
                     </section>
                 </div>);
     }

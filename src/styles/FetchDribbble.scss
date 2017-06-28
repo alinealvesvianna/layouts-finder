@@ -1,3 +1,42 @@
-﻿.dribbbleItem {
-    background: #f0f;
+.dribbleShot-list {
+  margin: 0 auto;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.dribbleShot-list__item {
+  text-align: center;
+  padding: 0.5em;
+  background: #fff;
+  margin: 0 auto 1em;
+  cursor: pointer;
+}
+
+.dribbleShot-list__item--small {
+  width: 49%;
+}
+
+.dribbleShot-list__item--large {
+  width: 100%;
+}
+
+.dribbleShot-list__image {
+  display: block;
+  width: 100%;
+}
+
+.dribbleShot-list__txt {
+  font-size: 1.2em;
+  color: #60338e;
+  margin: 0.3em 0;
+}
+
+@media only screen and (min-width: 60em) {
+  .dribbleShot-list__item--small {
+    width: 24.5%;
+  }
+
+  .dribbleShot-list__item--large {
+    width: 32.5%;
+  }
 }

@@ -4,20 +4,20 @@ import './../styles/DetailsShot.css';
 export class ShowDetailShot extends Component {
     render(){
         return(
-          <div className="detailShot">
-            <span className="close" onClick={this.props.closeModal}>x</span>
-            <h1>{this.props.title}</h1>
-            <h2>{this.props.likesAmount} curtiram!</h2>
-            <img src={this.props.url} alt={this.props.description} />
+          <div className="modal__details">
+            <span className="close" onClick={this.props.closeModal}>x fechar</span>
+            <p className="modal__tit">{this.props.title}</p>
+            <p className="modal__txt">{this.props.likesAmount} pessoas curtiram!</p>
+            <img className="modal__img" src={this.props.url} alt={this.props.description} />
           </div>
       )
   }
 }
 
 
-export const LikeShot = (props) => <li key={props.id}>
+export const LikeShot = (props) => <li className="likes-list__item" key={props.id}>
   <a href = {props.userLink}>
-    <img src={props.avatar} alt={"Usuario que curtiu: " + props.description}/>
-    {props.nameUser}
+    <img className="likes-list__img" src={props.avatar} alt={"Usuario que curtiu: " + props.description}/>
+    <span className="likes-list__txt">{props.nameUser}</span>
   </a>
 </li>

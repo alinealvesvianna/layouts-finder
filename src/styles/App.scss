@@ -4,7 +4,6 @@
 }
 
 .container--intro{
-  background: #60338e;
   height: 100vh;
 }
 
@@ -106,10 +105,13 @@
   color:#f3ef03;
 }
 
+.row{
+    width:90%;
+    margin: 0 auto;
+}
 
 .container--selects{
   margin: 2em auto;
-  width:80%;
   text-align: center;
   background: rgba(255,255,255,0.2);
   padding:2em;
@@ -120,4 +122,8 @@
   text-align: center;
   font-weight: 300;
   font-size: 2em
+}
+
+
+.container--shots{
 }
