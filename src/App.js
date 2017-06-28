@@ -33,19 +33,19 @@ class App extends Component {
       period: [
         {
           value: 'week',
-          name: 'week'
+          name: 'semana'
         },
         {
           value: 'month',
-          name: 'month'
+          name: 'mês'
         },
         {
           value: 'year',
-          name: 'year'
+          name: 'ano'
         },
         {
           value: 'ever',
-          name: 'ever'
+          name: 'todos'
         }
       ],
       //per_page
