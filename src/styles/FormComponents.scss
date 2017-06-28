@@ -1,3 +1,4 @@
+$purpleDark: #311948;
 
 .select-form  {
   -webkit-appearance: none!important;
@@ -65,17 +66,17 @@
   width: 26px;
   left: 4px;
   bottom: 4px;
-  background-color: white;
+  background-color: #fff;
   -webkit-transition: .4s;
   transition: .4s;
 }
 
 input:checked + .slider {
-  background-color: #311948;
+  background-color: $purpleDark;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #311948;
+  box-shadow: 0 0 1px $purpleDark;
 }
 
 input:checked + .slider:before {

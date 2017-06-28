@@ -33,9 +33,17 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Oswald', sans-serif;
+  font: {
+    family: 'Oswald', sans-serif;
+    weight: 300;
+  }
 }
 
 img{
   width: 100%;
+}
+
+ul{
+  list-style: none;
+  padding: 0;
 }

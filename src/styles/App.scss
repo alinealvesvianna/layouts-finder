@@ -1,3 +1,6 @@
+$purpleColor: #60338e;
+$yellowColor:#f3ef03;
+
 .container{
   width: 100%;
   position: relative;
@@ -96,13 +99,13 @@
 }
 
 .icon__logo{
-  color:#f3ef03;
+  color: $yellowColor;
   display: inline-block;
   padding-right:0.2em;
 }
 
 .yellow{
-  color:#f3ef03;
+  color:$yellowColor;
 }
 
 .row{
@@ -118,12 +121,8 @@
 }
 
 .slogan{
-  color: white;
+  color: #fff;
   text-align: center;
   font-weight: 300;
   font-size: 2em
-}
-
-
-.container--shots{
 }

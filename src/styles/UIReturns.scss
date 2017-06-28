@@ -1,8 +1,11 @@
+$purpleColor: #60338e;
+$yellowColor:#f3ef03;
+
 .loading,
 .error {
   position: absolute;
   height: 100%;
-  background: #60338e;
+  background: $purpleColor;
   opacity: 0.9;
   width: 100%;
   z-index: 1000;
@@ -13,7 +16,7 @@
 .error__txt {
   font-size: 2em;
   text-align: center;
-  color: #f3ef03;
+  color: $yellowColor;
   position: relative;
   top: 25vh;
 }
@@ -25,7 +28,7 @@
 /*Créditos da animação do loading https://projects.lukehaas.me/css-loaders/*/
 
 .loading__animation {
-    color: #f3ef03;
+    color: $yellowColor;
     font-size: 11px;
     text-indent: -99999em;
     margin: 0 auto;
@@ -47,7 +50,7 @@
 .loading__animation:before {
     width: 5.2em;
     height: 10.2em;
-    background: #60338e;
+    background: $purpleColor;
     border-radius: 10.2em 0 0 10.2em;
     top: -0.1em;
     left: -0.1em;
@@ -60,7 +63,7 @@
 .loading__animation:after {
     width: 5.2em;
     height: 10.2em;
-    background: #60338e;
+    background: $purpleColor;
     border-radius: 0 10.2em 10.2em 0;
     top: -0.1em;
     left: 5.1em;

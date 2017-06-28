@@ -1,42 +1,46 @@
+$yellowColor:#f3ef03;
+
 .modal {
   position: absolute;
   top: 0;
   width: 100%;
   height: 100%;
-  background: rgba(96, 51, 142, 0.9);
+  background: rgba(96, 51, 142,0.9);
+
+  .modal__tit {
+    font-size: 2em;
+    color: #fff;
+    text-align: center;
+    margin: 0.5em 0;
+  }
+
+  .modal__img {
+    width: 100%;
+    display: block;
+    margin: 0 auto 2em;
+  }
+
+  .modal__txt {
+    font-size: 1.6em;
+    color: $yellowColor;
+    padding: 0.5em;
+    border: 1px solid $yellowColor;
+    display: inline-block;
+  }
+
 }
 
 .container--modal {
-  border: 1px solid #f3ef03;
+  border: 1px solid $yellowColor;
   padding: 1em;
   margin-top: 1.6em;
 }
 
-.modal__tit {
-  font-size: 2em;
-  color: #fff;
-  text-align: center;
-  margin: 0.5em 0;
-}
-
-.modal__img {
-  width: 100%;
-  display: block;
-  margin: 0 auto 2em;
-}
-
-.modal__txt {
-  font-size: 1.6em;
-  color: #f3ef03;
-  padding: 0.5em;
-  border: 1px solid #f3ef03;
-  display: inline-block;
-}
 
 .close {
   display: inline-block;
   font-size: 1.6em;
-  border: 1px solid #f3ef03;
+  border: 1px solid $yellowColor;
   padding: 0.5em;
   text-align: center;
 }
@@ -47,37 +51,43 @@
   width: auto;
   margin: 0 auto;
   text-align: center;
-}
 
-.likes-list__item {
-  width: 50%;
-  margin-bottom: 1em;
-}
+  .likes-list__item {
+    width: 50%;
+    margin-bottom: 1em;
+  }
 
-.likes-list__img {
-  width: 50px;
-  height: auto;
-  border-radius: 50px;
-  line-height: 50px;
-  vertical-align: middle;
-  margin-right: 10px;
-}
+  .likes-list__img {
+    width: 50px;
+    height: auto;
+    border-radius: 50px;
+    line-height: 50px;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
 
-.likes-list__txt {
-  display: inline-block;
-  color: #fff;
-  font-size: 1.3em;
-  font-weight: lighter;
+  .likes-list__txt {
+    display: inline-block;
+    color: #fff;
+    font-size: 1.3em;
+    font-weight: lighter;
+  }
 }
 
 @media only screen and (min-width: 60em) {
+
+.modal{
   .modal__img {
     width: auto;
     max-height: 40em;
   }
+}
 
+.likes-list{
   .likes-list__item {
     width: 30%;
     margin-bottom: 1em;
   }
+}
+
 }
