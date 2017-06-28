@@ -1,26 +1,80 @@
-.App {
-  text-align: center;
+.container{
+  width: 100%;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-  width: 30px;
-  color: #000;
+.container--intro{
+  background: #60338e;
+  height: 100vh;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.ilustration {
+  background-image: url(../images/spray.svg);
+  background-repeat: no-repeat;
+  height: 25em;
+  width:25em;
+  margin: 0 auto;
+  display: block;
 }
 
-.App-intro {
-  font-size: large;
+
+@keyframes wobble {
+  from {
+    transform: none;
+  }
+
+  15% {
+    transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);
+  }
+
+  30% {
+    transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);
+  }
+
+  45% {
+    transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
+  }
+
+  60% {
+    transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
+  }
+
+  75% {
+    transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
+  }
+
+  to {
+    transform: none;
+  }
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.wobble {
+  animation-name: wobble;
+}
+
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+.animated.infinite {
+  animation-iteration-count: infinite;
+}
+
+.animated.hinge {
+  animation-duration: 2s;
+}
+
+.hide{
+  display: none;
+}
+
+.show{
+  display: block;
+}
+
+.close{
+  font-size: 40px;
+  color: #fff;
+  cursor: pointer;
+  display: block;
 }

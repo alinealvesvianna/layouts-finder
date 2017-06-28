@@ -4,7 +4,8 @@
   "private": true,
   "dependencies": {
     "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "webfontloader": "^1.6.28"
   },
   "devDependencies": {
     "axios": "^0.16.2",

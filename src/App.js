@@ -100,7 +100,8 @@ class App extends Component {
       });
 
     return (
-      <div className="container">
+      <div className="container container--intro">
+          <span className="animated wobble ilustration"></span>
           {selects}
           <FetchDribbble
             typeOfSearchSelected = {this.state.values.typeOfSearch}

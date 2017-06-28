@@ -22,6 +22,7 @@ class FetchDribbble extends Component {
         }
         this.handleImage = this.handleImage.bind(this);
         this.openDetails = this.openDetails.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
     componentWillReceiveProps(nextProps){
@@ -84,7 +85,7 @@ class FetchDribbble extends Component {
                   showLoading: false,
                   requestFail: false,
                   requestMessageFail: ""})
-            
+
           })
 
         .catch((error) => {
@@ -103,6 +104,12 @@ class FetchDribbble extends Component {
         this.setState({
             isLarge: value
         })
+    }
+
+    closeModal(){
+      this.setState({
+        showDetailShot: false
+      })
     }
 
     openDetails(event, data){
@@ -139,7 +146,8 @@ class FetchDribbble extends Component {
                                 url={this.state.dataShotClicked.images.hidpi}
                                 title={this.state.dataShotClicked.title}
                                 description={this.state.dataShotClicked.title}
-                                likesAmount={this.state.dataShotClicked.likes_count} /> : ""
+                                likesAmount={this.state.dataShotClicked.likes_count}
+                                closeModal={()=> this.closeModal()}/> : ""
 
         const likes = this.state.likesShot.length > 0
                         ? this.state.likesShot.map(obj => (
@@ -149,11 +157,11 @@ class FetchDribbble extends Component {
                                 description = {obj.user.username}
                                 nameUser = {obj.user.username} /> )) : ""
 
-        const loading = this.state.showLoading 
+        const loading = this.state.showLoading
                         ? <Loading /> : ""
 
         const error = this.state.requestFail
-                        ? <MensageError 
+                        ? <MensageError
                             message= {this.state.requestMessageFail.message} /> : ""
 
 
@@ -164,7 +172,7 @@ class FetchDribbble extends Component {
                     <ul>
                         {dribbbleShot}
                     </ul>
-                    <section>
+                    <section className = {this.state.showDetailShot? "show" : "hide"}>
                         {details}
                         {likes}
                     </section>
